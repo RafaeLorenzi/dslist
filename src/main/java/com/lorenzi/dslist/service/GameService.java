@@ -3,6 +3,7 @@ package com.lorenzi.dslist.service;
 import com.lorenzi.dslist.dto.GameDTO;
 import com.lorenzi.dslist.dto.GameMinDTO;
 import com.lorenzi.dslist.entities.Game;
+import com.lorenzi.dslist.projections.GameMinProjection;
 import com.lorenzi.dslist.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,10 @@ public class GameService {
         return result.stream().map(x -> new GameMinDTO(x)).toList();
 
     }
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> findByList(Long listId){
+        List<GameMinProjection> result = gameRepository.searchByList(listId);
+        return result.stream().map(x -> new GameMinDTO(x)).toList();
 
+    }
 }
